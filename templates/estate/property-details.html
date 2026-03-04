@@ -1873,7 +1873,8 @@
                 {% else %}
                   <form id="property-id" method="post" action="{% url 'property_detail' property.slug %}">
                     {% csrf_token %}
-                    <button id="save-btn" name="save_property" type="submit" class="btn-save btn-save-primary">
+                     <input type="hidden" name="save_property" value="1">
+                    <button id="save-btn"  type="submit" class="btn-save btn-save-primary">
                       <i class="bi bi-bookmark-plus"></i> Save Property
                     </button>
                   </form>

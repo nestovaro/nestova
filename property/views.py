@@ -179,7 +179,6 @@ def get_properties_details(request, slug):
 
     # ── POST: could be a save-property action OR an application submission ───
     if request.method == "POST":
-
         # ── POST: Save property (original behaviour, triggered by save button)
         if 'save_property' in request.POST:
             try:
