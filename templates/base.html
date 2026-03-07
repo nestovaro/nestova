@@ -3,6 +3,15 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GZED1MNTLD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GZED1MNTLD');
+  </script>
+
   {% block seo_meta %}
   {% include 'includes/seo_meta.html' %}
   {% endblock seo_meta %}
@@ -1476,7 +1485,7 @@
           </div>
           <div class="col-lg-6 col-md-12">
             <div class="footer-bottom-links">
-              <a href="#">Privacy Policy</a>
+              <a href="{% url "privacy_policy" %}">Privacy Policy</a>
               <a href="#">Terms of Service</a>
               <a href="#">Cookie Policy</a>
             </div>

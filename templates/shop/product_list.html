@@ -1059,8 +1059,8 @@
                 <div class="product-card">
                   <!-- Image -->
                   <div class="product-image-wrapper">
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                    {% if product.main_image %}
+                    <img src="{{ product.main_image.url }}" alt="{{ product.name }}" loading="lazy">
                     {% else %}
                     <div class="img-placeholder"><i class="bi bi-bag"></i></div>
                     {% endif %}

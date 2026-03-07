@@ -82,3 +82,6 @@ def dashboard_user(request):
     return render(request, "estate/dashboard.html")
 
 
+
+def privacy_policy(request):
+    return render(request, "estate/privacy.html")
