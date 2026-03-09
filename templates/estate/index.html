@@ -412,18 +412,21 @@
   .hero-universe {
     position: relative;
     margin-top: 0;
-    padding-top:80px;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+    padding-top: 80px; /* exactly the fixed navbar height */
     overflow: hidden;
   }
 
   .hero-scene {
     position: relative;
     width: 100%;
-    height: 100vh;
-    max-height: 900px;
+    /* Subtract navbar height so carousel fills exactly from navbar-bottom to viewport-bottom.
+       100dvh = dynamic viewport height — the iOS Safari fix. iOS Safari gives 100vh a constant
+       "large viewport" value (URL-bar-hidden state) which was causing the extra gap vs Android
+       (Android Chrome adapts 100vh to the current visible viewport). dvh always reflects
+       the actual visible area on both platforms. */
+    height: calc(100vh - 80px);
+    height: calc(100dvh - 80px);
+    max-height: 820px;
   }
 
   .hero-carousel-wrap {
@@ -2249,7 +2252,7 @@
 
   @media (max-width: 575px) {
     .hero-scene {
-      max-height: 580px;
+      max-height: 500px;
     }
 
     .hero-cta-row {
