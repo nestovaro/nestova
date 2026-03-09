@@ -50,11 +50,16 @@
     padding: 0;
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     font-family: var(--font-body);
     background: var(--obsidian);
     color: var(--text-primary);
     overflow-x: hidden;
+    max-width: 100vw;
   }
 
   /* ============================================
@@ -412,8 +417,9 @@
   .hero-universe {
     position: relative;
     margin-top: 0;
-    padding-top: 80px; /* exactly the fixed navbar height */
+    padding-top: 80px;
     overflow: hidden;
+    max-width: 100%;
   }
 
   .hero-scene {
@@ -981,7 +987,7 @@
 
   .prop-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
     gap: 28px;
     margin-top: 52px;
   }
@@ -2890,89 +2896,160 @@
   }
 
   /* ============================================================
-     HERO — SMALL SCREEN FIXES
-     Targets ≤ 767px (phones + small tablets)
+     GLOBAL OVERFLOW + RESPONSIVE GUARD
+     Prevents any section/element from causing horizontal scroll
   ============================================================ */
-  @media (max-width: 767px) {
 
-    /* ── Image: show from top so the building is fully visible ── */
-    .hero-slide-bg {
-      background-position: center top;
-      background-size: cover;
-      /* Reduce Ken Burns scale so it doesn't crop the image edges */
-      transform: scale(1.03);
-    }
-    .hero-slide.active .hero-slide-bg {
-      transform: scale(1);
-    }
-
-    /* Darken overlay uniformly on mobile so centered text stays legible
-       regardless of which part of the image is behind it */
-    .hero-slide-overlay {
-      background:
-        linear-gradient(to bottom, rgba(6,11,26,0.55) 0%, rgba(6,11,26,0.3) 40%, rgba(6,11,26,0.75) 100%),
-        rgba(6,11,26,0.35);
-    }
-
-    /* ── Content: centered horizontally and vertically ── */
-    .hero-content-wrap {
-      align-items: center;          /* vertical: middle of slide */
-      justify-content: center;      /* horizontal: centered */
-      padding-top: 0;               /* reset the top-anchor from previous rules */
-      padding-bottom: 100px;        /* lift centre point up to clear nav arrows */
-    }
-
-    .hero-content {
-      padding: 0 24px;
-      max-width: 100%;
-      text-align: center;           /* center all text */
-    }
-
-    /* Eyebrow badge: center it */
-    .hero-eyebrow {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Location line: center */
-    .hero-location {
-      justify-content: center;
-    }
-
-    /* Feature pills row: center */
-    .hero-features {
-      justify-content: center;
-    }
-
-    /* CTA buttons: center */
-    .hero-cta-row {
-      justify-content: center;
-      flex-direction: row;          /* keep side-by-side if space allows */
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+  /* Every section and major wrapper must clip horizontally */
+  section,
+  .hero-universe,
+  .hero-scene,
+  .hero-carousel-wrap,
+  .carousel-3d-track,
+  .stats-float-bar,
+  .search-section,
+  .properties-section,
+  .why-section,
+  .testimonials-section,
+  .partners-section,
+  .licensed-section,
+  .events-section,
+  .excos-section,
+  .blog-section,
+  .section-wrap {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
-  /* ── Phones (≤ 480px): stack CTA buttons to avoid wrapping ── */
-  @media (max-width: 480px) {
-    .hero-content-wrap {
-      padding-bottom: 90px;
-    }
+  /* Prevent the partners infinite scroll from causing page overflow */
+  .partners-track-wrap {
+    max-width: 100%;
+    overflow: hidden;
+  }
 
-    .hero-content {
-      padding: 0 18px;
+  /* ── Tablet (≤ 991px) ── */
+  @media (max-width: 991px) {
+    .hero-price-pill { display: none; }
+    .hero-scene { max-height: 720px; }
+    .hero-slide-overlay {
+      background:
+        linear-gradient(to right, rgba(6,11,26,0.94) 0%, rgba(6,11,26,0.8) 65%, rgba(6,11,26,0.55) 100%),
+        linear-gradient(to top, rgba(6,11,26,0.88) 0%, transparent 52%);
     }
+    .stats-bar-inner { padding: 28px 24px; }
+    .why-video-frame { margin-bottom: 40px; }
+    .section-wrap { padding: 80px 4vw; }
+    .cta-band { padding: 60px 40px; margin: 0 4vw 80px; }
+    .licensed-glass { padding: 44px 36px; }
+  }
 
-    .hero-cta-row {
-      flex-direction: column;
-      align-items: center;
-    }
+  /* ── Phablet (≤ 767px) ── */
+  @media (max-width: 767px) {
+    /* Hero */
+    .hero-scene { max-height: 680px; min-height: 520px; }
+    .hero-content-wrap { align-items: flex-start; padding-top: 40px; }
+    .hero-content { padding: 0 20px 130px; max-width: 100%; }
+    .hero-title { font-size: clamp(1.9rem, 7.5vw, 2.8rem); margin-bottom: 14px; }
+    .hero-eyebrow { margin-bottom: 16px; }
+    .hero-location { margin-bottom: 18px; }
+    .hero-features { gap: 8px; margin-bottom: 20px; }
+    .hero-feat { padding: 9px 14px; font-size: 0.8rem; gap: 8px; }
+    .hero-nav { left: 50%; transform: translateX(-50%); bottom: 62px; }
+    .hero-dots { bottom: 24px; }
+    .hero-scroll-hint { display: none; }
 
-    .cta-primary,
-    .cta-secondary {
-      width: 100%;
-      justify-content: center;
-    }
+    /* Stats */
+    .stats-bar-inner { flex-wrap: wrap; justify-content: center; padding: 20px 16px; gap: 16px; }
+    .stat-item::after { display: none; }
+    .stat-item { min-width: 90px; flex: 0 0 auto; }
+    .stat-number { font-size: 2.2rem; }
+
+    /* Search */
+    .search-section { padding: 0 14px 60px; margin-top: -30px; }
+    .search-glass-card { padding: 24px 18px; border-radius: 16px; }
+    .search-fields { grid-template-columns: 1fr; gap: 12px; }
+    .search-btn-wrap { grid-column: 1; }
+
+    /* Properties */
+    .section-wrap { padding: 60px 16px; }
+    .prop-grid { grid-template-columns: 1fr; gap: 20px; }
+
+    /* Why section */
+    .why-section { padding: 80px 0; }
+
+    /* Testimonials */
+    .testimonials-section { padding: 70px 16px; }
+    .testi-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    /* CTA band */
+    .cta-band { padding: 50px 24px; margin: 0 0 60px; border-radius: 20px; }
+    .cta-band h2 { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+    .cta-band-btns { flex-direction: column; align-items: center; gap: 12px; }
+
+    /* Licensed */
+    .licensed-glass { padding: 32px 20px; border-radius: 20px; }
+    .license-body-grid { grid-template-columns: 1fr; gap: 20px; }
+    .license-cards-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .licensed-header { flex-direction: column; gap: 16px; }
+
+    /* Blog */
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-section { padding: 60px 16px; }
+
+    /* Events */
+    .events-section { padding: 70px 14px; }
+    .events-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .event-cell:nth-child(1) { grid-column: 1 / -1; }
+
+    /* Excos */
+    .excos-section { padding: 60px 0; }
+  }
+
+  /* ── Small mobile (≤ 575px) ── */
+  @media (max-width: 575px) {
+    /* Hero */
+    .hero-scene { max-height: none; height: calc(100svh - 64px); min-height: 460px; }
+    .hero-content-wrap { padding-top: 24px; }
+    .hero-content { padding: 0 16px 120px; }
+    .hero-title { font-size: clamp(1.6rem, 8.5vw, 2.2rem); letter-spacing: -0.4px; }
+    .hero-eyebrow { font-size: 0.68rem; padding: 6px 12px; margin-bottom: 12px; }
+    .hero-location { font-size: 0.85rem; margin-bottom: 14px; }
+    .hero-features { display: none; }
+    .hero-cta-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .cta-primary, .cta-secondary { padding: 12px 22px; font-size: 0.85rem; }
+    .hero-nav { bottom: 52px; gap: 12px; }
+    .hero-nav-btn { width: 44px; height: 44px; font-size: 0.85rem; }
+    .hero-dots { bottom: 20px; }
+
+    /* Stats */
+    .stats-float-bar { margin-top: -20px; padding: 0 12px 50px; }
+    .stats-bar-inner { padding: 18px 14px; gap: 12px; }
+    .stat-number { font-size: 1.9rem; }
+    .stat-label { font-size: 0.7rem; }
+
+    /* Search */
+    .search-section { padding: 0 12px 50px; margin-top: -20px; }
+    .search-glass-card { padding: 20px 14px; }
+    .search-tab { padding: 7px 12px; font-size: 0.75rem; }
+
+    /* Section spacing */
+    .section-wrap { padding: 50px 14px; }
+
+    /* Licensed */
+    .license-cards-row { grid-template-columns: 1fr; }
+
+    /* Events */
+    .events-grid { grid-template-columns: 1fr; }
+    .event-cell:nth-child(1) { grid-column: 1; }
+    .event-overlay { opacity: 1; }
+    .event-name, .event-date { transform: none; }
+  }
+
+  /* ── Tiny (≤ 360px) ── */
+  @media (max-width: 360px) {
+    .hero-content { padding: 0 12px 110px; }
+    .hero-title { font-size: 1.5rem; }
+    .header-container { padding: 0 12px; }
   }
 </style>
 {% endblock %}
@@ -3340,7 +3417,7 @@
     <div class="container">
       <div class="row align-items-center gy-5">
         <div class="col-lg-5" data-reveal>
-          <div style="position: relative; padding: 30px;">
+          <div style="position: relative; padding: clamp(10px, 3vw, 30px);">
             <div class="why-video-frame">
               <iframe id="yt-player"
                 src="https://www.youtube-nocookie.com/embed/VXKUW1W-qTc?autoplay=1&mute=1&loop=1&playlist=VXKUW1W-qTc&controls=0&rel=0&playsinline=1"
@@ -3357,7 +3434,7 @@
         </div>
 
         <div class="col-lg-7" data-reveal data-reveal-delay="200">
-          <div style="padding: 0 40px 0 20px;">
+          <div style="padding: clamp(0px, 2vw, 40px) clamp(0px, 3vw, 40px) 0 clamp(0px, 2vw, 20px);">
             <div class="section-badge"><i class="bi bi-star-fill"></i> Why Choose Us</div>
             <h2 class="section-title-xl" style="margin-bottom: 16px; color: #060B1A;">Your Gateway to
               <em>Exceptional</em> Real Estate

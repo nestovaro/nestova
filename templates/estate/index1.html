@@ -419,14 +419,10 @@
   .hero-scene {
     position: relative;
     width: 100%;
-    /* Subtract navbar height so carousel fills exactly from navbar-bottom to viewport-bottom.
-       100dvh = dynamic viewport height — the iOS Safari fix. iOS Safari gives 100vh a constant
-       "large viewport" value (URL-bar-hidden state) which was causing the extra gap vs Android
-       (Android Chrome adapts 100vh to the current visible viewport). dvh always reflects
-       the actual visible area on both platforms. */
     height: calc(100vh - 80px);
     height: calc(100dvh - 80px);
     max-height: 820px;
+    overflow: hidden;
   }
 
   .hero-carousel-wrap {
@@ -1165,6 +1161,7 @@
     position: relative;
     padding: 120px 0;
     overflow: hidden;
+    background: linear-gradient(180deg, var(--obsidian) 0%, rgba(13,27,62,0.15) 50%, var(--obsidian) 100%);
   }
 
   .why-bg-accent {
@@ -1320,13 +1317,13 @@
   .benefit-text h4 {
     font-size: 1rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-primary);
     margin-bottom: 6px;
   }
 
   .benefit-text p {
     font-size: 0.88rem;
-    color: rgba(255, 255, 255, 0.45);
+    color: var(--text-muted);
     line-height: 1.6;
   }
 
@@ -1337,6 +1334,7 @@
     padding: 100px 5vw;
     position: relative;
     overflow: hidden;
+    background: rgba(6, 11, 26, 0.5);
   }
 
   .testi-grid {
@@ -2158,39 +2156,66 @@
   }
 
   /* ============================================
-   RESPONSIVE
+   RESPONSIVE — COMPREHENSIVE HERO + LAYOUT FIXES
    ============================================ */
+
+  /* ── 1200px: tuck price pill in ── */
   @media (max-width: 1199px) {
     .hero-price-pill {
-      display: none;
+      width: 190px;
+      padding: 20px 22px;
+      right: 3vw;
     }
-
-    .search-row {
-      grid-template-columns: 1fr 1fr;
-    }
+    .price-amount { font-size: 1.5rem; }
+    .search-row { grid-template-columns: 1fr 1fr; }
   }
 
+  /* ── 991px ── */
   @media (max-width: 991px) {
-    .hero-scene {
-      max-height: 700px;
+    /* Hide price pill — overlaps content on tablet */
+    .hero-price-pill { display: none; }
+
+    .hero-scene { max-height: 720px; }
+
+    /* Extend overlay to full width since pill is gone */
+    .hero-slide-overlay {
+      background:
+        linear-gradient(to right, rgba(6,11,26,0.94) 0%, rgba(6,11,26,0.78) 65%, rgba(6,11,26,0.5) 100%),
+        linear-gradient(to top, rgba(6,11,26,0.88) 0%, transparent 52%);
     }
 
-    .stats-bar-inner {
-      padding: 28px 32px;
-    }
-
-    .why-video-frame {
-      margin-bottom: 48px;
-    }
-
-    .section-wrap {
-      padding: 80px 5vw;
-    }
+    .stats-bar-inner { padding: 28px 32px; }
+    .why-video-frame { margin-bottom: 48px; }
+    .section-wrap { padding: 80px 5vw; }
   }
 
+  /* ── 767px ── */
   @media (max-width: 767px) {
+    .hero-scene {
+      max-height: 680px;
+      min-height: 520px;
+    }
+
+    /* Anchor content to top so nav arrows at bottom never reach it */
+    .hero-content-wrap {
+      align-items: flex-start;
+      padding-top: 40px;
+    }
+
+    /* Bottom padding = enough room for nav (52px btn + 20px gap + 30px dots + 16px safety) */
+    .hero-content {
+      padding: 0 24px 128px;
+      max-width: 100%;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 8vw, 3rem);
+      margin-bottom: 14px;
+    }
+
     .hero-features {
       gap: 10px;
+      margin-bottom: 22px;
     }
 
     .hero-feat {
@@ -2198,92 +2223,93 @@
       font-size: 0.82rem;
     }
 
-    .hero-title {
-      font-size: clamp(2rem, 8vw, 3rem);
+    /* Center nav arrows — prevents them sitting under left-aligned CTA buttons */
+    .hero-nav {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 64px;
     }
 
+    /* Dots stay centered */
+    .hero-dots { bottom: 26px; }
+
+    /* Scroll hint overlaps right edge on mobile — hide it */
+    .hero-scroll-hint { display: none; }
+
+    /* Rest of layout */
     .stats-bar-inner {
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: center;
       padding: 24px;
     }
-
-    .stat-item::after {
-      display: none;
-    }
-
-    .stat-item {
-      min-width: 100px;
-    }
-
-    .prop-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .search-row {
-      grid-template-columns: 1fr;
-    }
-
-    .search-panel {
-      padding: 28px 24px;
-    }
-
-    .cta-band {
-      padding: 60px 30px;
-    }
-
-    .hero-scroll-hint {
-      display: none;
-    }
-
-    .section-wrap {
-      padding: 60px 5vw;
-    }
-
-    .testi-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .stats-float-bar {
-      margin-top: -30px;
-    }
+    .stat-item::after { display: none; }
+    .stat-item { min-width: 100px; }
+    .prop-grid { grid-template-columns: 1fr; }
+    .search-row { grid-template-columns: 1fr; }
+    .search-panel { padding: 28px 24px; }
+    .cta-band { padding: 60px 30px; }
+    .section-wrap { padding: 60px 5vw; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .stats-float-bar { margin-top: -30px; }
   }
 
+  /* ── 575px ── */
   @media (max-width: 575px) {
     .hero-scene {
-      max-height: 500px;
+      max-height: none;
+      height: calc(100svh - 64px);
+      min-height: 480px;
     }
+
+    .hero-content-wrap { padding-top: 28px; }
+
+    .hero-content {
+      padding: 0 18px 120px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.75rem, 9vw, 2.5rem);
+      letter-spacing: -0.5px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      padding: 6px 14px;
+      margin-bottom: 14px;
+    }
+
+    .hero-location { font-size: 0.88rem; margin-bottom: 14px; }
+
+    .hero-features { display: none; } /* too cramped on small screens */
 
     .hero-cta-row {
       flex-direction: column;
       align-items: flex-start;
+      gap: 12px;
+    }
+    .cta-primary, .cta-secondary {
+      padding: 13px 24px;
+      font-size: 0.88rem;
     }
 
-    .hero-content {
-      padding: 0 24px;
+    .hero-nav {
+      bottom: 56px;
+      gap: 14px;
     }
+    .hero-nav-btn { width: 44px; height: 44px; }
+    .hero-dots { bottom: 22px; }
 
-    .hero-features {
-      display: none;
-    }
+    .stats-bar-inner { padding: 20px; }
+    .stat-number { font-size: 2rem; }
+    .cta-band-btns { flex-direction: column; align-items: center; }
+    .cta-band { margin: 0 4vw 60px; }
+  }
 
-    .stats-bar-inner {
-      padding: 20px;
-    }
-
-    .stat-number {
-      font-size: 2rem;
-    }
-
-    .cta-band-btns {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .cta-band {
-      margin: 0 4vw 60px;
-    }
+  /* ── 360px ── */
+  @media (max-width: 360px) {
+    .hero-content { padding: 0 14px 110px; }
+    .hero-title { font-size: 1.65rem; }
   }
 
   /* ============================================
@@ -2843,6 +2869,7 @@
 
   .exco-body {
     padding: 20px 16px 24px;
+    background: rgba(12, 12, 18, 0.9);
   }
 
   .exco-position {
@@ -2886,92 +2913,6 @@
 
     .exco-name {
       font-size: 0.96rem;
-    }
-  }
-
-  /* ============================================================
-     HERO — SMALL SCREEN FIXES
-     Targets ≤ 767px (phones + small tablets)
-  ============================================================ */
-  @media (max-width: 767px) {
-
-    /* ── Image: show from top so the building is fully visible ── */
-    .hero-slide-bg {
-      background-position: center top;
-      background-size: cover;
-      /* Reduce Ken Burns scale so it doesn't crop the image edges */
-      transform: scale(1.03);
-    }
-    .hero-slide.active .hero-slide-bg {
-      transform: scale(1);
-    }
-
-    /* Darken overlay uniformly on mobile so centered text stays legible
-       regardless of which part of the image is behind it */
-    .hero-slide-overlay {
-      background:
-        linear-gradient(to bottom, rgba(6,11,26,0.55) 0%, rgba(6,11,26,0.3) 40%, rgba(6,11,26,0.75) 100%),
-        rgba(6,11,26,0.35);
-    }
-
-    /* ── Content: centered horizontally and vertically ── */
-    .hero-content-wrap {
-      align-items: center;          /* vertical: middle of slide */
-      justify-content: center;      /* horizontal: centered */
-      padding-top: 0;               /* reset the top-anchor from previous rules */
-      padding-bottom: 100px;        /* lift centre point up to clear nav arrows */
-    }
-
-    .hero-content {
-      padding: 0 24px;
-      max-width: 100%;
-      text-align: center;           /* center all text */
-    }
-
-    /* Eyebrow badge: center it */
-    .hero-eyebrow {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Location line: center */
-    .hero-location {
-      justify-content: center;
-    }
-
-    /* Feature pills row: center */
-    .hero-features {
-      justify-content: center;
-    }
-
-    /* CTA buttons: center */
-    .hero-cta-row {
-      justify-content: center;
-      flex-direction: row;          /* keep side-by-side if space allows */
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-  }
-
-  /* ── Phones (≤ 480px): stack CTA buttons to avoid wrapping ── */
-  @media (max-width: 480px) {
-    .hero-content-wrap {
-      padding-bottom: 90px;
-    }
-
-    .hero-content {
-      padding: 0 18px;
-    }
-
-    .hero-cta-row {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .cta-primary,
-    .cta-secondary {
-      width: 100%;
-      justify-content: center;
     }
   }
 </style>
@@ -3359,10 +3300,10 @@
         <div class="col-lg-7" data-reveal data-reveal-delay="200">
           <div style="padding: 0 40px 0 20px;">
             <div class="section-badge"><i class="bi bi-star-fill"></i> Why Choose Us</div>
-            <h2 class="section-title-xl" style="margin-bottom: 16px; color: #060B1A;">Your Gateway to
+            <h2 class="section-title-xl" style="margin-bottom: 16px;">Your Gateway to
               <em>Exceptional</em> Real Estate
             </h2>
-            <p class="section-subtitle" style="margin-bottom: 36px; color: #060B1A;">Nestova combines deep local market
+            <p class="section-subtitle" style="margin-bottom: 36px;">Nestova combines deep local market
               knowledge with international service standards, providing a secure and transparent marketplace for all
               your real estate needs.</p>
 
@@ -3407,7 +3348,7 @@
   <section class="testimonials-section mb-4">
     <div style="text-align: center;" data-reveal>
       <div class="section-badge"><i class="bi bi-chat-quote-fill"></i> Testimonials</div>
-      <h2 class="section-title-xl" style="color: black;">What Our <em>Clients</em> Say</h2>
+      <h2 class="section-title-xl">What Our <em>Clients</em> Say</h2>
       <p class="section-subtitle" style="margin: 14px auto 0;">Real stories from real people who found their dream homes
         with Nestova.</p>
     </div>
@@ -3993,8 +3934,8 @@
       <!-- Heading -->
       <div style="text-align:center; margin-bottom:60px;" data-reveal>
         <div class="section-eyebrow"><span>Meet The Team</span></div>
-        <h2 class="section-title" style="color: black;">Our Top <em>Excos</em></h2>
-        <p class="section-sub" style="max-width:620px; margin:0 auto; color: black;">
+        <h2 class="section-title">Our Top <em>Excos</em></h2>
+        <p class="section-sub" style="max-width:620px; margin:0 auto;">
           The seasoned executives driving Nestova's vision forward — a team
           of proven leaders committed to redefining Nigerian real estate.
         </p>
@@ -4011,9 +3952,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Hrm Oba Akintoye Adeoye</div>
-              <div class="exco-dept" style="color: black;">President &amp; Chairman REDAN Council</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Hrm Oba Akintoye Adeoye</div>
+              <div class="exco-dept">President &amp; Chairman REDAN Council</div>
             </div>
           </div>
         </div>
@@ -4024,9 +3965,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Dr Abikoye Emmanuel Adekunle</div>
-              <div class="exco-dept" style="color: black;">President BRG</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Dr Abikoye Emmanuel Adekunle</div>
+              <div class="exco-dept">President BRG</div>
             </div>
           </div>
         </div>
@@ -4037,9 +3978,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">EFCC Unit</div>
-              <div class="exco-name" style="color: black;">Oseni Kazeem </div>
-              <div class="exco-dept" style="color: black;">Compliance &amp; Enforcement Unit</div>
+              <div class="exco-position">EFCC Unit</div>
+              <div class="exco-name">Oseni Kazeem </div>
+              <div class="exco-dept">Compliance &amp; Enforcement Unit</div>
             </div>
           </div>
         </div>
@@ -4050,9 +3991,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Dr Saheed Mosadoluwa Audullahi</div>
-              <div class="exco-dept" style="color: black;">Gardens&amp; Estate Development Ltd</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Dr Saheed Mosadoluwa Audullahi</div>
+              <div class="exco-dept">Gardens&amp; Estate Development Ltd</div>
             </div>
           </div>
         </div>
@@ -4063,9 +4004,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chairman Of REDEAN Lagos Chapter</div>
-              <div class="exco-name" style="color: black;">Dr.Tony Aspire Kolewole</div>
-              <div class="exco-dept" style="color: black;">REDEAN Lagos Chapter</div>
+              <div class="exco-position">Chairman Of REDEAN Lagos Chapter</div>
+              <div class="exco-name">Dr.Tony Aspire Kolewole</div>
+              <div class="exco-dept">REDEAN Lagos Chapter</div>
             </div>
           </div>
         </div>
@@ -4076,9 +4017,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Chief Ernest Bassy</div>
-              <div class="exco-dept" style="color: black;">Ologiri Concept And Properties</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Chief Ernest Bassy</div>
+              <div class="exco-dept">Ologiri Concept And Properties</div>
             </div>
           </div>
         </div>
@@ -4089,9 +4030,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Chief Obi Cubana</div>
-              <div class="exco-dept" style="color: black;">Cubana Groups</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Chief Obi Cubana</div>
+              <div class="exco-dept">Cubana Groups</div>
             </div>
           </div>
         </div>
@@ -4102,9 +4043,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Chief Kennedy Okonkwo</div>
-              <div class="exco-dept" style="color: black;">Nedcomoaks Ltd</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Chief Kennedy Okonkwo</div>
+              <div class="exco-dept">Nedcomoaks Ltd</div>
             </div>
           </div>
         </div>
@@ -4115,9 +4056,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Dr Segun Philips</div>
-              <div class="exco-dept" style="color: black;">Sabreworks Realty Ltd</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Dr Segun Philips</div>
+              <div class="exco-dept">Sabreworks Realty Ltd</div>
             </div>
           </div>
         </div>
@@ -4128,9 +4069,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Dr. Abiodun Afolayan</div>
-              <div class="exco-dept" style="color: black;">Zenytal Properties Ltd</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Dr. Abiodun Afolayan</div>
+              <div class="exco-dept">Zenytal Properties Ltd</div>
             </div>
           </div>
         </div>
@@ -4141,9 +4082,9 @@
             </div>
             <div class="exco-gold-bar"></div>
             <div class="exco-body">
-              <div class="exco-position" style="color: black;">Chief Executive Officer</div>
-              <div class="exco-name" style="color: black;">Dr Endurance Cletus Agonor</div>
-              <div class="exco-dept" style="color: black;">ACEROYAL Estate Ltd</div>
+              <div class="exco-position">Chief Executive Officer</div>
+              <div class="exco-name">Dr Endurance Cletus Agonor</div>
+              <div class="exco-dept">ACEROYAL Estate Ltd</div>
             </div>
           </div>
         </div>
