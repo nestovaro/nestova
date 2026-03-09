@@ -780,7 +780,7 @@
       font-size: 0.72rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: white;
       font-weight: 600;
       margin-bottom: 22px;
     }
@@ -815,7 +815,7 @@
 
     .contact-info p {
       margin: 0;
-      color: var(--text-muted);
+      color: white;
       font-size: 0.88rem;
       line-height: 1.6;
     }
@@ -1424,9 +1424,9 @@
               <div class="contact-icon"><i class="bi bi-geo-alt"></i></div>
               <div class="contact-info">
                 {% if contact_info %}
-                <p>{{ contact_info.address_line1 }}<br>{{ contact_info.city }}, {{ contact_info.state }} {{ contact_info.postal_code }}<br>{{ contact_info.country }}</p>
+                <p style="color: white !important;">{{ contact_info.address_line1 }}<br>{{ contact_info.city }}, {{ contact_info.state }} {{ contact_info.postal_code }}<br>{{ contact_info.country }}</p>
                 {% else %}
-                <p>2 Nestova Close, Lekki Phase 1<br>Lagos, Nigeria</p>
+                <p style="color: white !important;">2 Nestova Close, Lekki Phase 1<br>Lagos, Nigeria</p>
                 {% endif %}
               </div>
             </div>
@@ -1434,14 +1434,14 @@
             <div class="contact-item">
               <div class="contact-icon"><i class="bi bi-telephone"></i></div>
               <div class="contact-info">
-                <p>{% if contact_info %}{{ contact_info.phone }}{% else %}+234 (0) 800 000 0000{% endif %}</p>
+                <p><a href="tel:{% if contact_info %}{{ contact_info.phone }}{% else %}+2348000000000{% endif %}" style="color: white !important;">{% if contact_info %}{{ contact_info.phone }}{% else %}+234 (0) 800 000 0000{% endif %}</a></p>
               </div>
             </div>
 
             <div class="contact-item">
               <div class="contact-icon"><i class="bi bi-envelope"></i></div>
               <div class="contact-info">
-                <p>{% if contact_info %}{{ contact_info.email }}{% else %}hello@nestova.ng{% endif %}</p>
+                <p><a href="mailto:{% if contact_info %}{{ contact_info.email }}{% else %}hello@nestova.ng{% endif %}" style="color: white !important;">{% if contact_info %}{{ contact_info.email }}{% else %}hello@nestova.ng{% endif %}</a></p>
               </div>
             </div>
 
