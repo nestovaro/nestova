@@ -1915,7 +1915,7 @@
                 <div class="agent-avatar">
                   {% if property.agent %}
                     <a href="{% url 'agents:agent_profile' property.agent.slug %}">
-                      <img src="{% if property.agent.user.profile_image %}{{ property.agent.user.profile_image.url }}{% else %}{% static 'assets/img/real-estate/agent-3.webp' %}{% endif %}" alt="{{ property.agent.user.get_full_name }}">
+                      <img src="{{ property.agent.get_users_image }}" alt="{{ property.agent.user.get_full_name }}">
                     </a>
                   
                   {% else %}
