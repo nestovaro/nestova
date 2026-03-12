@@ -685,7 +685,7 @@
         <div class="ap-avatar-wrap">
           <div class="ap-avatar-ring"></div>
           <img
-            src="{% if agent.user.profile_image %}{{ agent.user.profile_image.url }}{% else %}{% static 'assets/img/real-estate/agent-3.webp' %}{% endif %}"
+            src="{{ agent.user.get_users_image }}"
             alt="{{ agent.user.get_full_name }}"
             class="ap-avatar">
         </div>
