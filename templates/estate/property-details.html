@@ -1917,8 +1917,7 @@
                     <a href="{% url 'agents:agent_profile' property.agent.slug %}">
                       <img src="{% if property.agent.user.profile_image %}{{ property.agent.user.profile_image.url }}{% else %}{% static 'assets/img/real-estate/agent-3.webp' %}{% endif %}" alt="{{ property.agent.user.get_full_name }}">
                     </a>
-                  {% elif property.listed_by %}
-                    <img src="{{ property.listed_by.get_users_image }}" alt="{{ property.listed_by.get_full_name }}">
+                  
                   {% else %}
                     <img src="{% static 'assets/img/real-estate/agent-3.webp' %}" alt="Agent">
                   {% endif %}
@@ -1928,14 +1927,18 @@
                     <a class="agent-name" href="{% url 'agents:agent_profile' property.agent.slug %}">
                       {{ property.agent.user.get_full_name|default:property.agent.user.username }}
                     </a>
-                    <a class="agent-name" href="https://wa.me/{{ property.agent.user.phone_number|cut:'+' }}" target="_blank" rel="noopener noreferrer">{{ property.agent.user.phone_number }}</a>
+                      <a class="agent-name" 
+   href="https://wa.me/{{ property.agent.user.phone_number|cut:'+' }}" 
+   target="_blank" 
+   rel="noopener noreferrer">
+  <i class="fab fa-whatsapp" style="color: #25D366; margin-right: 6px;"></i>
+  {{ property.agent.user.phone_number }}
+</a>
                     <span class="agent-role">Listing Agent</span>
                     {% if property.agent.verification_status == 'verified' %}
                     <div class="badge-verified"><i class="bi bi-patch-check-fill"></i> Verified</div>
                     {% endif %}
-                  {% else %}
-                    <span class="agent-name" style="cursor:default;">{{ property.listed_by.get_full_name|default:property.listed_by.username }}</span>
-                    <span class="agent-role">Listing Agent</span>
+                  
                   {% endif %}
                 </div>
               </div>
