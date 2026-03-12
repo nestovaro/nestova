@@ -705,12 +705,7 @@
               <i class="bi bi-houses"></i>
               {{ total_properties }} Listing{{ total_properties|pluralize }}
             </span>
-            {% if agent.user.email %}
-            <span class="ap-chip">
-              <i class="bi bi-envelope"></i>
-              {{ agent.user.email }}
-            </span>
-            {% endif %}
+            
             {% if agent.user.phone_number %}
             <span class="ap-chip">
               <i class="bi bi-telephone"></i>
