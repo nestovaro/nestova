@@ -89,14 +89,19 @@ def send_payment_success_email(order):
     """Send payment success email to customer"""
     try:
         subject = f'Payment Confirmed - {order.order_number}'
-        
+
+        # Build absolute URL without needing request object
+        order_path = reverse('shop:order_detail', args=[order.id])
+        order_url = f"{settings.SITE_URL.rstrip('/')}{order_path}"
+
         # Render HTML email
         html_message = render_to_string('shop/email/payment_success.html', {
             'order': order,
             'user': order.user,
+            'order_url': order_url,
         })
         plain_message = strip_tags(html_message)
-        
+
         send_mail(
             subject=subject,
             message=plain_message,
@@ -109,8 +114,6 @@ def send_payment_success_email(order):
     except Exception as e:
         logger.error(f"Error sending payment success email for order {order.order_number}: {e}", exc_info=True)
         return False
-import requests
-
 
 # ===========================
 # Product Views
