@@ -5,6 +5,7 @@
 {% load property_extras %}
 {% load embed_video_tags %}
 
+
 {% block seo_meta %}
 {% include 'includes/seo_meta.html' %}
 {% endblock seo_meta %}
@@ -1775,20 +1776,23 @@
           </div>
 
           <!-- Video -->
-          {% if property.video_url %}
-          <div class="glass-panel">
-            <div class="glass-panel-title"><i class="bi bi-play-circle"></i> Property Video Tour</div>
-            <div class="video-frame-wrap">
-              <div class="ratio ratio-16x9">
-                <iframe src="https://www.youtube-nocookie.com/embed/{{ property.video_url|youtube_id }}?rel=0&modestbranding=1"
-                  title="Property Video Tour" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen>
-                </iframe>
-              </div>
-            </div>
-          </div>
-          {% endif %}
+          {% with vid_id=property.video_url|youtube_id %}
+  {% if vid_id %}
+    <div class="glass-panel">
+      <div class="glass-panel-title"><i class="bi bi-play-circle"></i> Property Video Tour</div>
+      <div class="video-frame-wrap">
+        <div class="ratio ratio-16x9">
+          <iframe src="https://www.youtube-nocookie.com/embed/{{ vid_id }}?rel=0&modestbranding=1"
+            title="Property Video Tour" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endwith %}
+
 
         </div>
 

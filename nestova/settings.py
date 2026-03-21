@@ -136,6 +136,8 @@ if not DEBUG:
 WSGI_APPLICATION = 'nestova.wsgi.application'
 
 
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 

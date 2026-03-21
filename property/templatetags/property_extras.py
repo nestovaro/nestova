@@ -19,22 +19,23 @@ def force_https(url):
 
 @register.filter(name='youtube_id')
 def youtube_id(value):
-    """Extract YouTube/Vimeo ID from URL"""
+    """Extract YouTube ID from URL. Returns None if no ID found."""
     if not value:
-        return ""
-    if hasattr(value, 'url'):
-        value = value.url
+        return None
     
-    # Robust YouTube ID regex
-    # Handles: watch?v=ID, youtu.be/ID, embed/ID, v/ID, shorts/ID
-    yt_pattern = r'(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/ ]{11})'
-    match = re.search(yt_pattern, str(value))
+    # If the value is a field object, get the URL string
+    val_str = str(value.url if hasattr(value, 'url') else value).strip()
+
+    # Improved Regex to handle: 
+    # watch?v=ID, youtu.be/ID, embed/ID, shorts/ID, and ?si= tracking params
+    yt_pattern = r'(?:v=|/v/|/embed/|youtu\.be/|/shorts/|^)([a-zA-Z0-9_-]{11})(?:[?&]|$)'
+    
+    match = re.search(yt_pattern, val_str)
     if match:
         return match.group(1)
     
-    # Check if value itself looks like an 11-char ID
-    val_str = str(value).strip()
+    # Check if the string itself is just an 11-char ID
     if len(val_str) == 11 and re.match(r'^[a-zA-Z0-9_-]{11}$', val_str):
         return val_str
         
-    return value
+    return None
