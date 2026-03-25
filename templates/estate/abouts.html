@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About Nestova — The Unified Property &amp; Lifestyle Ecosystem{% endblock %}
+{% block title %}About Nestova — Nigeria's Most Trusted Real Estate Brokerage{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -662,74 +662,6 @@
     flex-shrink: 0;
   }
 
-  /* ── Eco-card full-span (Property Hub) ── */
-  .eco-card-full {
-    grid-column: 1 / -1;
-    border-color: rgba(201, 168, 76, 0.3);
-    background: linear-gradient(135deg, rgba(18, 18, 26, 0.95), rgba(30, 22, 5, 0.85));
-    position: relative;
-    overflow: hidden;
-  }
-
-  .eco-card-full::before {
-    content: '';
-    position: absolute;
-    top: -80px;
-    right: -80px;
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201, 168, 76, 0.1), transparent);
-    pointer-events: none;
-  }
-
-  .eco-card-full .eco-icon {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-    background: linear-gradient(135deg, rgba(201, 168, 76, 0.28), rgba(201, 168, 76, 0.08));
-    border-color: rgba(201, 168, 76, 0.4);
-  }
-
-  .eco-hub-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 4px 14px;
-    border-radius: 50px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: #0A0A0F;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .eco-hub-features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 16px;
-  }
-
-  .eco-hub-features span {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 6px 16px;
-    border-radius: 50px;
-    background: rgba(201, 168, 76, 0.07);
-    border: 1px solid rgba(201, 168, 76, 0.2);
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 0.8rem;
-  }
-
-  .eco-hub-features span i {
-    color: var(--gold);
-    font-size: 0.75rem;
-  }
-
   /* ── 6. CORE VALUES ── */
   .values-grid {
     display: grid;
@@ -1086,18 +1018,18 @@
 
         <!-- Text -->
         <div class="ab-hero-text" data-aos="fade-right" data-aos-delay="100">
-          <div class="ab-eyebrow">The Unified Nestova Ecosystem</div>
+          <div class="ab-eyebrow">Nestova Brokerage &mdash; Rebranding Blueprint</div>
           <h1 class="ab-hero-title">
-            A Multi-Sector Property<br>
-            &amp; <em>Lifestyle</em> Ecosystem<br>
-            Built on Trust
+            Nigeria's Most<br>
+            <em>Trusted</em> Real Estate<br>
+            Brokerage Firm
           </h1>
           <p class="ab-hero-lead">
-            Nestova is no longer just real estate sales. We are a unified ecosystem
-            operating across investment, living, technology and global access —
-            delivering value under
-            <strong style="color:rgba(255,255,255,0.8);">one trusted identity.</strong>
-            Trust. Structure. Excellence.
+            This rebrand marks a strategic evolution of Nestova Groups Limited — from a
+            fast-growing real estate brand into a national brokerage powerhouse built on
+            <strong style="color:rgba(255,255,255,0.8);">trust, structure and delivery.</strong>
+            We are not just selling properties. We are building confidence in real estate
+            investing across Nigeria.
           </p>
           <div class="ab-hero-ctas">
             <a href="{% url 'properties' %}" class="btn-primary-gold">
@@ -1112,13 +1044,6 @@
         <!-- Stat cards -->
         <div class="ab-hero-stats" data-aos="fade-left" data-aos-delay="300">
           <div class="ab-stat-card">
-            <div class="ab-stat-icon"><i class="bi bi-grid-3x3-gap-fill"></i></div>
-            <div>
-              <div class="ab-stat-num">6</div>
-              <div class="ab-stat-label">Ecosystem Divisions</div>
-            </div>
-          </div>
-          <div class="ab-stat-card">
             <div class="ab-stat-icon"><i class="bi bi-building"></i></div>
             <div>
               <div class="ab-stat-num">500+</div>
@@ -1126,10 +1051,17 @@
             </div>
           </div>
           <div class="ab-stat-card">
+            <div class="ab-stat-icon"><i class="bi bi-shield-fill-check"></i></div>
+            <div>
+              <div class="ab-stat-num">100%</div>
+              <div class="ab-stat-label">Developer Verified</div>
+            </div>
+          </div>
+          <div class="ab-stat-card">
             <div class="ab-stat-icon"><i class="bi bi-people-fill"></i></div>
             <div>
               <div class="ab-stat-num">100+</div>
-              <div class="ab-stat-label">Satisfied Clients</div>
+              <div class="ab-stat-label">Satisfied Investors</div>
             </div>
           </div>
           <div class="ab-stat-card">
@@ -1163,18 +1095,17 @@
   <section class="ab-section ab-section-alt">
     <div class="container" data-aos="fade-up">
       <div class="rebrand-statement-wrap">
-        <div class="ab-eyebrow-sm">Our Identity Statement</div>
+        <div class="ab-eyebrow-sm">Our Big Rebrand Statement</div>
         <p class="rebrand-quote">
-          Nestova is no longer just real estate sales — we are a multi-sector
-          property and lifestyle ecosystem operating under one trusted identity.
+          Nestova Brokerage exists to become Nigeria's most trusted bridge between
+          investors, homeowners and credible developers.
         </p>
         <hr class="ab-gold-rule" style="margin:28px auto;">
         <p class="rebrand-sub">
-          Delivering value across investment, living, technology and global access,
-          Nestova brings every property-related solution under a single roof. From
-          brokerage to smart security, interior design to global gadget sourcing —
-          we are one brand, one promise, one ecosystem built on
-          <strong style="color:rgba(255,255,255,0.75);">Trust. Structure. Excellence.</strong>
+          We are developer-neutral, investor-first and structurally accountable.
+          Every developer listed on Nestova has passed our verification framework.
+          Every property promoted carries our brand promise. Every client we represent
+          leaves with clarity, security and long-term value — not just a transaction receipt.
         </p>
       </div>
     </div>
@@ -1286,9 +1217,9 @@
         <div class="ab-eyebrow-sm" style="justify-content:center">The Unified Nestova Platform</div>
         <h2 class="ab-section-title" style="color: white;">Our <em>Identity</em> &amp; Ecosystem</h2>
         <p class="ab-section-lead" style="margin: 0 auto; color: white;">
-          Nestova is no longer just real estate sales. We are a multi-sector property
-          and lifestyle ecosystem operating under one trusted identity — delivering value
-          across investment, living, technology and global access.
+          Nestova is no longer just "real estate sales." We are a multi-sector property
+          and lifestyle ecosystem operating under one trusted identity — giving clients
+          access to every property-related solution they need in one place.
         </p>
       </div>
 
@@ -1300,9 +1231,9 @@
             <div class="eco-name">Nestova Brokerage</div>
             <div class="eco-tag">Core Business</div>
             <p class="eco-desc">
-              Sales, leasing, shortlet placement and investor advisory. We connect clients
-              to verified developers and structured property opportunities, ensuring
-              transparency, proper documentation and secure transactions.
+              Sales, leasing, shortlet placement and investor advisory. Our primary
+              brokerage arm operates on a verified-only model, connecting clients
+              to developers that meet our strict due-diligence standards.
             </p>
           </div>
         </div>
@@ -1313,9 +1244,9 @@
             <div class="eco-name">Nestova Property &amp; Shortlets</div>
             <div class="eco-tag">Rentals</div>
             <p class="eco-desc">
-              Residential and commercial rentals, including managed short-stay apartments.
-              We provide comfortable, well-managed living spaces for individuals, families
-              and corporate clients — combining convenience with premium experience.
+              Residential and commercial rentals, managed short-stay apartments.
+              Our shortlet management service handles everything from listing
+              to guest turnover for property owners.
             </p>
           </div>
         </div>
@@ -1326,9 +1257,9 @@
             <div class="eco-name">Nestova Design &amp; Build</div>
             <div class="eco-tag">Interior &amp; Exterior</div>
             <p class="eco-desc">
-              Interior and exterior design, property finishing and staging. We transform
-              spaces into functional, modern and aesthetically appealing environments
-              that increase property value and enhance lifestyle.
+              Interior and exterior design, property finishing and staging.
+              We offer end-to-end design solutions that add value and market
+              appeal to any residential or commercial property.
             </p>
           </div>
         </div>
@@ -1339,46 +1270,10 @@
             <div class="eco-name">Nestova SmartShield</div>
             <div class="eco-tag">Security &amp; Automation</div>
             <p class="eco-desc">
-              Smart security systems, CCTV, smart locks and automation solutions. We
-              secure homes and properties using modern technology, giving clients
-              safety, control and peace of mind.
+              Smart security, CCTV systems, smart locks and home automation
+              solutions. We install, configure and maintain cutting-edge
+              security systems across residential and commercial properties.
             </p>
-          </div>
-        </div>
-
-        <div class="eco-card">
-          <div class="eco-icon"><i class="bi bi-globe2"></i></div>
-          <div>
-            <div class="eco-name">Nestova Communications</div>
-            <div class="eco-tag">Global Sourcing</div>
-            <p class="eco-desc">
-              Global sourcing and importation of smart gadgets — brand new and certified
-              fairly used. We supply laptops, iPhones, Samsung devices, gaming consoles
-              and mobile accessories sourced directly from trusted international suppliers,
-              ensuring quality, affordability and reliability.
-            </p>
-          </div>
-        </div>
-
-        <!-- Property Hub — Game Changer (full width) -->
-        <div class="eco-card eco-card-full" data-aos="fade-up" data-aos-delay="150">
-          <div class="eco-icon" style="flex-shrink:0;"><i class="bi bi-diagram-3-fill"></i></div>
-          <div style="flex:1">
-            <div class="eco-hub-badge"><i class="bi bi-rocket-takeoff-fill"></i> The Game-Changer</div>
-            <div class="eco-name">Nestova Property Hub</div>
-            <div class="eco-tag">Digital Marketplace</div>
-            <p class="eco-desc" style="max-width:720px;">
-              A powerful digital gateway to global visibility — designed for realtors,
-              developers and property owners. More than a listing platform; it is a
-              structured marketplace built on trust, visibility and opportunity.
-            </p>
-            <div class="eco-hub-features">
-              <span><i class="bi bi-patch-check-fill"></i> Realtor Verification</span>
-              <span><i class="bi bi-building-add"></i> Vetted Property Listings</span>
-              <span><i class="bi bi-megaphone-fill"></i> Website &amp; Brokerage Exposure</span>
-              <span><i class="bi bi-globe-americas"></i> Nigeria-Wide &amp; Global Reach</span>
-              <span><i class="bi bi-link-45deg"></i> Connect With Clients Worldwide</span>
-            </div>
           </div>
         </div>
 
@@ -1389,11 +1284,10 @@
         <div class="arch-icon"><i class="bi bi-diagram-3-fill"></i></div>
         <div>
           <div class="arch-label" style="color: white;">Brand Architecture — Simple to the Public</div>
-          <div class="arch-sub" style="color: white;">
+          <div class="arch-sub" style="color: white;>
             <strong style="color:var(--gold)">Nestova</strong> is the parent brand.
-            Six divisions, one name, one promise. Brokerage · Property &amp; Shortlets ·
-            Design &amp; Build · SmartShield · Communications · Property Hub — all delivering
-            under a single trusted identity: <em>Trust. Structure. Excellence.</em>
+            All services flow under one name and one promise. Clients engage with
+            a single trusted identity — not a fragmented collection of sub-brands.
           </div>
         </div>
       </div>
@@ -1665,12 +1559,11 @@
         Your Partner in Every Stage of Property Ownership
       </div>
       <h2 class="about-cta-title">
-        Ready to Experience a Brokerage<br>That <em>Does More for You</em>?
+        Ready to Invest with a Brokerage<br>That <em>Protects Your Interest</em>?
       </h2>
       <p class="about-cta-sub">
-        Whether you're a first-time buyer, a seasoned investor, a realtor seeking
-        global visibility or a client needing design, security or tech solutions —
-        you're already in the right ecosystem.
+        Whether you're a first-time buyer, a seasoned investor, or a developer seeking
+        a credible marketing partner — Nestova is the brokerage built for you.
       </p>
       <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
         <a href="{% url 'properties' %}" class="btn-primary-gold">
