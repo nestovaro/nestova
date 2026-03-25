@@ -15,250 +15,256 @@
 
 <link rel="stylesheet" href="{% static 'assets/css/nestova-index.css' %}">
 <style>
-  /* ============================================================
-     HERO CAROUSEL — RESPONSIVE FIXES
-     Fixes: text overflow, overlapping buttons/arrows/image/pill
-  ============================================================ */
+/* ═══════════════════════════════════════════════════
+   HERO CAROUSEL — OVERLAP & LAYOUT FIX
+═══════════════════════════════════════════════════ */
 
-  /* --- Base hero layout --- */
-  .hero-universe {
-    position: relative;
-    overflow: hidden;
-  }
+/* ── Outer shell ── */
+.hero-universe {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
 
-  .hero-scene,
-  .hero-carousel-wrap,
-  .carousel-3d-track {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
+.hero-scene,
+.hero-carousel-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-  .hero-slide {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: flex-end;        /* anchor content to bottom */
-  }
+/* ── Track: slides container ── */
+.carousel-3d-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 
-  .hero-slide.active {
-    position: relative;
-  }
+/* ── Every slide stacks at the same position, hidden by default ── */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 1;
+}
 
-  /* --- Image layer — full cover, never bleed over UI --- */
-  .hero-slide-bg,
-  .hero-slide-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-  }
+.hero-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
 
-  .hero-slide-overlay,
-  .hero-grain {
-    z-index: 1;
-  }
+/* ── Background image layer fills the slide ── */
+.hero-slide-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
 
-  /* --- Content wrapper — safe stacking zone --- */
+.hero-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* ── Dark gradient overlay above image ── */
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to right,
+    rgba(5, 5, 10, 0.82) 0%,
+    rgba(5, 5, 10, 0.50) 55%,
+    rgba(5, 5, 10, 0.20) 100%
+  );
+}
+
+/* ── Grain texture above overlay ── */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Content: positioned above all overlays ── */
+.hero-content-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  padding: 0 6%;
+  padding-top: 80px;
+}
+
+.hero-content {
+  max-width: 600px;
+  position: relative;
+  z-index: 4;
+}
+
+/* ── Price pill: bottom-right inside the slide ── */
+.hero-price-pill {
+  position: absolute;
+  bottom: 130px;
+  right: 6%;
+  z-index: 5;
+  background: rgba(10, 10, 15, 0.80);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 168, 76, 0.30);
+  border-radius: 16px;
+  padding: 20px 28px;
+  min-width: 170px;
+  text-align: center;
+}
+
+/* ── Nav arrows: float above ALL slides ── */
+.hero-nav {
+  position: absolute;
+  bottom: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-nav-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.hero-nav-btn:hover {
+  background: rgba(201, 168, 76, 0.22);
+  border-color: rgba(201, 168, 76, 0.5);
+  color: #d4af37;
+  transform: scale(1.08);
+}
+
+.hero-counter {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.12em;
+  min-width: 44px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+/* ── Dots: float at very bottom, centre ── */
+.hero-dots {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.30);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-dot.active {
+  width: 22px;
+  border-radius: 3px;
+  background: #d4af37;
+}
+
+/* ── Scroll hint: bottom-left ── */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 6%;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.hero-scroll-hint span {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  writing-mode: vertical-rl;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.6));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
   .hero-content-wrap {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    padding: 0 0 100px;           /* bottom room for nav bar */
+    padding: 0 5%;
+    padding-top: 70px;
+    align-items: flex-end;
+    padding-bottom: 170px;
   }
 
-  .hero-content {
-    max-width: 680px;
-    padding: clamp(1rem, 4vw, 2.5rem) clamp(1rem, 5vw, 3rem);
-  }
-
-  /* --- Responsive font sizes (fluid scaling) --- */
-  .hero-eyebrow {
-    font-size: clamp(0.65rem, 1.5vw, 0.85rem);
-    letter-spacing: 0.12em;
-    margin-bottom: 0.5rem;
-  }
-
-  .hero-title {
-    font-size: clamp(1.5rem, 4.5vw, 3.5rem);
-    line-height: 1.15;
-    margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
-    word-break: break-word;
-  }
-
-  .hero-location {
-    font-size: clamp(0.75rem, 1.8vw, 1rem);
-    margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-  }
-
-  /* --- Feature pills — wrap cleanly on small screens --- */
-  .hero-features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(0.4rem, 1.5vw, 0.75rem);
-    margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
-  }
-
-  .hero-feat {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: clamp(0.7rem, 1.6vw, 0.9rem);
-    white-space: nowrap;
-  }
-
-  /* --- CTA buttons row — stack on mobile, side-by-side on desktop --- */
-  .hero-cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(0.5rem, 1.5vw, 0.75rem);
-    align-items: center;
-  }
-
-  .cta-primary,
-  .cta-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: clamp(0.75rem, 1.8vw, 0.95rem);
-    padding: clamp(0.45rem, 1.2vw, 0.65rem) clamp(0.9rem, 2.5vw, 1.5rem);
-    white-space: nowrap;
-  }
-
-  /* --- Price pill — anchored top-right, never overlaps content --- */
   .hero-price-pill {
-    position: absolute;
-    top: clamp(1rem, 3vw, 2rem);
-    right: clamp(1rem, 3vw, 2rem);
-    z-index: 3;
-    text-align: center;
-    min-width: clamp(100px, 14vw, 150px);
+    bottom: 140px;
+    right: 5%;
+    left: auto;
+    min-width: 150px;
+    padding: 14px 18px;
   }
 
-  .price-amount {
-    font-size: clamp(0.9rem, 2.5vw, 1.5rem);
-    line-height: 1.2;
-  }
-
-  .price-label,
-  .price-period,
-  .price-tag {
-    font-size: clamp(0.6rem, 1.3vw, 0.75rem);
-  }
-
-  /* --- Nav arrows — always visible, clear of content --- */
-  .hero-nav {
-    position: absolute;
-    bottom: clamp(1rem, 2.5vw, 1.5rem);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
-    display: flex;
-    align-items: center;
-    gap: clamp(0.5rem, 2vw, 1rem);
-  }
-
-  .hero-nav-btn {
-    width: clamp(36px, 5vw, 48px);
-    height: clamp(36px, 5vw, 48px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-  }
-
-  .hero-counter {
-    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
-    white-space: nowrap;
-  }
-
-  /* --- Dots — sit just above the nav, centred --- */
-  .hero-dots {
-    position: absolute;
-    bottom: clamp(3.5rem, 7vw, 5rem);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
-    display: flex;
-    gap: 0.4rem;
-  }
-
-  /* --- Scroll hint — keep well clear of arrows --- */
   .hero-scroll-hint {
-    position: absolute;
-    bottom: clamp(1rem, 2.5vw, 1.5rem);
-    right: clamp(1rem, 2.5vw, 1.5rem);
-    z-index: 4;
+    display: none;
   }
-
-  /* ============================================================
-     BREAKPOINT: tablets (≤ 768 px)
-  ============================================================ */
-  @media (max-width: 768px) {
-    .hero-content-wrap {
-      padding-bottom: 120px;     /* extra room: dots + nav both visible */
-    }
-
-    .hero-content {
-      padding: 1rem 1rem 1.25rem;
-      max-width: 100%;
-    }
-
-    /* Price pill moves to bottom-left so it never covers the title */
-    .hero-price-pill {
-      position: absolute;
-      top: auto;
-      bottom: 5.5rem;            /* above nav bar */
-      right: 1rem;
-      left: auto;
-      min-width: 110px;
-    }
-
-    .hero-cta-row {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .cta-primary,
-    .cta-secondary {
-      width: 100%;
-      justify-content: center;
-    }
-
-    .hero-scroll-hint {
-      display: none;             /* reclaim space on mobile */
-    }
-  }
-
-  /* ============================================================
-     BREAKPOINT: phones (≤ 480 px)
-  ============================================================ */
-  @media (max-width: 480px) {
-    .hero-content-wrap {
-      padding-bottom: 130px;
-    }
-
-    .hero-price-pill {
-      bottom: 6rem;
-      min-width: 95px;
-      padding: 0.5rem 0.65rem;
-    }
-
-    .hero-features {
-      gap: 0.35rem;
-    }
-
-    .hero-nav {
-      gap: 0.5rem;
-    }
-  }
+}
 </style>
 {% endblock %}
 
