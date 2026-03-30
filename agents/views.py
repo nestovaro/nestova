@@ -427,6 +427,91 @@ def agent_profile(request, slug):
     return render(request, 'agents/agent_profile_dynamic.html', context)
 
 
+def agent_search_autocomplete(request):
+    """AJAX autocomplete for agent search — returns JSON suggestions"""
+    from django.db.models import Q, Count
+    from property.models import Property
+
+    query = request.GET.get('q', '').strip()
+    results = []
+
+    if len(query) >= 2:
+        agents = (
+            Agent.objects
+            .filter(
+                Q(user__first_name__icontains=query) |
+                Q(user__last_name__icontains=query) |
+                Q(user__username__icontains=query)
+                )
+            .select_related('user')[:8]
+        )
+
+        for agent in agents:
+            full_name = (
+                f"{agent.user.first_name} {agent.user.last_name}".strip()
+                or agent.user.username
+            )
+            # Safely get optional fields
+            avatar_url = None
+            if hasattr(agent, 'avatar') and agent.avatar:
+                try:
+                    avatar_url = agent.avatar.url
+                except Exception:
+                    pass
+            elif hasattr(agent, 'profile_picture') and agent.profile_picture:
+                try:
+                    avatar_url = agent.profile_picture.url
+                except Exception:
+                    pass
+
+            results.append({
+                'name': full_name,
+                'slug': agent.slug,
+                'url': reverse('agents:agent_profile', kwargs={'slug': agent.slug}),
+                'avatar': avatar_url,
+                'is_verified': agent.verification_status == 'verified',
+
+            })
+
+    return JsonResponse({'results': results})
+
+
+def agent_search(request):
+    """Full agent search results page"""
+    from django.db.models import Q, Count
+    from django.core.paginator import Paginator
+
+    query = request.GET.get('q', '').strip()
+    verified_only = request.GET.get('verified', '') == '1'
+
+    agents_qs = Agent.objects.select_related('user')[:8]
+
+    if query:
+        agents_qs = agents_qs.filter(
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query) |
+            Q(user__username__icontains=query) 
+           
+        )
+
+    
+
+    if verified_only:
+        agents_qs = agents_qs.filter(verification_status='verified')
+
+    paginator = Paginator(agents_qs, 12)
+    page_number = request.GET.get('page')
+    agents = paginator.get_page(page_number)
+
+    context = {
+        'agents': agents,
+        'query': query,
+        'verified_only': verified_only,
+        'total': paginator.count,
+    }
+    return render(request, 'agents/agent_search.html', context)
+
+
 def agent_properties(request, slug):
     """Display all properties listed by a specific agent"""
     from django.shortcuts import get_object_or_404
@@ -453,4 +538,3 @@ def agent_properties(request, slug):
     }
     
     return render(request, 'agents/agent_properties.html', context)
-
